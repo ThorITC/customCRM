@@ -1,0 +1,118 @@
+<div class="row" ng-init="vm.init()">
+  <div class="col s4">
+    <div class="card">
+      <div class="crd-image" style="    padding-top: 5%;">
+        <div class="row"><img ng-src="{{vm.user.avatar}}" alt="" class="circle center-block"></div>
+        <div class="row"><span class='themer' text-theme="true" other-class="card-title" ng-bind="vm.user.name+' '+vm.user.sername" style="text-align: center;display: block;"></span></div>
+      </div>
+
+      <div class="card-content" >
+        <div class="row" ng-show="vm.showField('email')">
+          <i class="material-icons">email</i> <span ng-bind="vm.user.email"></span>
+        </div>
+        <div class="row" ng-show="vm.showField('phone')">
+          <i class="material-icons">phone</i>
+          <span ng-bind="vm.user.phone"></span>
+        </div>
+        <div class="row" ng-show="vm.showField('dob')">
+          <i class="material-icons">cake</i>
+          <span ng-bind="vm.user.dob | date"></span>
+        </div>
+        <div class="row" ng-show="vm.showField('role')">
+          <i class="material-icons">person_pin_circle</i>
+          <span ng-bind="vm.user.role.role_name"></span>
+        </div>
+        <div class="row" ng-show="vm.showField('department')">
+          <i class="material-icons">business</i>
+          <span ng-bind="vm.user.department.department_name"></span>
+        </div>
+        <div class="row">
+          <i class="material-icons">event_note</i>
+          <span ng-bind="vm.user.reg_date|date"></span>
+        </div>
+        <div class="row">
+          <div class="input-field col s10">
+            <i class="material-icons prefix">assignment_ind</i>
+            <input id="first_name" type="text" ng-model="vm.user.position.position_name" class="validate">
+            <label for="first_name">Position</label>
+          </div>
+        </div>
+        <div class="row" style="display: table;margin-left: auto;margin-right: auto;">
+          <a class="theme-button" ng-click="vm.save()">Save</a>
+          <!--<a class="waves-effect waves-light btn red">Delete</a>-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <div class="row">
+    <div class="card card-overflow" style="position:inherit;">
+      <div class="intra-filter-inner">
+        <div class="col s3" style="padding:12px">
+          <a class="theme-button" href='javascript:void(0);' data-activates='demoDropdown' dropdown data-hover="true">
+              {{vm.filter}}
+          </a>
+          <ul id='demoDropdown' class='dropdown-content'>
+              <li><a href="javascript:void(0);" class="themer" text-theme='true' ng-click="vm.changeFilter('Day')">Day</a></li>
+              <li><a href="javascript:void(0);" class="themer" text-theme='true' ng-click="vm.changeFilter('Week')">Week</a></li>
+              <!--<li><a href="javascript:void(0);" ng-click="changeFilter('Month')">Month</a></li>-->
+          </ul>
+        </div>
+        <div class="col s6">
+          <input input-date
+                  type="text"
+                  id="inputCreated"
+                  ng-model="vm.currentTime"
+                  container="body"
+                  format="dd/mm/yyyy"
+                  months-full="{{ vm.month }}"
+                  months-short="{{ vm.monthShort }}"
+                  weekdays-full="{{ vm.weekdaysFull }}"
+                  weekdays-short="{{ wvm.eekdaysShort }}"
+                  weekdays-letter="{{ vm.weekdaysLetter }}"
+                  disable="disable"
+                  today="today"
+                  clear="clear"
+                  close="close"
+                  select-years="5"
+                  on-set="vm.getEvents()"
+                  />
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+    <div class="card">
+      <div class="col s12" ng-if='vm.events.length===0'>
+        <span class="intra-empty-result">Not found</span>
+      </div>
+      <div class="col s12" ng-if='vm.events.length>0'>
+        <div ng-if="vm.filter=='Day'">
+          <ul class="collapsible" data-collapsible="accordion" watch>
+            <li ng-repeat="event in vm.events">
+                <div class="collapsible-header"><i class="material-icons">{{event.event_type.id==1?'check':'close'}}</i><span ng-bind="event.create_date | date:'medium'"></span>   <span class="result-time" ng-if="event.event_type.id==2" ng-bind="event.tickedTime | milisecFilter"></span></div>
+                <div class="collapsible-body" ng-if="event.event_type.id==2"><p><span ng-bind="event.comment"></span></p></div>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="vm.filter=='Week'">
+          <ul class="collapsible" data-collapsible="accordion" watch>
+            <li ng-repeat="event in vm.events">
+                <div class="collapsible-header"><i class="material-icons">event_note</i> <span ng-bind="event.dayName"></span> <span ng-bind="event.date | date"></span><span class="result-time" ng-bind="event.hours | milisecFilter"></span></div>
+                <div class="collapsible-body" style="padding:15px"><ul class="collapsible" data-collapsible="accordion" watch>
+                  <li ng-repeat="subEvent in event.events">
+                      <div class="collapsible-header"><i class="material-icons">{{subEvent.event_type.id==1?'check':'close'}}</i><span ng-bind="subEvent.create_date | date:'medium'"></span>   <span class="result-time" ng-if="subEvent.event_type.id==2" ng-bind="subEvent.tickedTime | milisecFilter"></span></div>
+                      <div class="collapsible-body" ng-if="subEvent.event_type.id==2"><p><span ng-bind="subEvent.comment"></span></p></div>
+                  </li>
+                </ul></div>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="vm.filter=='Month'">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>

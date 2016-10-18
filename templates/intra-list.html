@@ -1,0 +1,116 @@
+<div ng-init="vm.init()">
+<div class="row">
+  <div class="card card-overflow intra-filter-panel hide-on-med-and-down" style="position:inherit;">
+    <div class="intra-filter-inner">
+      <div class="col s2" style="padding:12px">
+        <a class="theme-button" href='javascript:void(0);' data-activates='demoDropdown' dropdown data-hover="true">
+            {{vm.filter}}
+        </a>
+        <ul id='demoDropdown' class='dropdown-content'>
+            <li><a href="javascript:void(0);" class="themer" text-theme='true' ng-click="vm.changeFilter('Day')">Day</a></li>
+            <li><a href="javascript:void(0);" class="themer" text-theme='true' ng-click="vm.changeFilter('Week')">Week</a></li>
+            <!--<li><a href="javascript:void(0);" ng-click="changeFilter('Month')">Month</a></li>-->
+        </ul>
+      </div>
+      <div class="col s2">
+        <input input-date
+                type="text"
+                id="inputCreated"
+                ng-model="vm.currentTime"
+                container="body"
+                format="dd/mm/yyyy"
+                months-full="{{ vm.month }}"
+                months-short="{{ vm.monthShort }}"
+                weekdays-full="{{ vm.weekdaysFull }}"
+                weekdays-short="{{ wvm.eekdaysShort }}"
+                weekdays-letter="{{ vm.weekdaysLetter }}"
+                disable="disable"
+                today="today"
+                clear="clear"
+                close="close"
+                select-years="5"
+                on-set="vm.onSet()"
+                />
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+    <div class="intra-container">
+      <div class="col s7" ng-if='vm.events.length===0'>
+        <span class="intra-empty-result">Not found</span>
+      </div>
+      <div class="col s7" ng-if='vm.events.length>0'>
+        <div ng-if="vm.filter=='Day'">
+          <ul class="collapsible" data-collapsible="accordion" watch>
+            <li ng-repeat="event in vm.events">
+                <div class="collapsible-header"><i class="material-icons">{{event.event_type.id==1?'check':'close'}}</i><span ng-bind="event.create_date | date:'medium'"></span>   <span class="result-time" ng-if="event.event_type.id==2" ng-bind="event.tickedTime | milisecFilter"></span></div>
+                <div class="collapsible-body" ng-if="event.event_type.id==2"><p><span ng-bind="event.comment"></span></p></div>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="vm.filter=='Week'">
+          <ul class="collapsible" data-collapsible="accordion" watch>
+            <li ng-repeat="event in vm.events">
+                <div class="collapsible-header"><i class="material-icons">event_note</i> <span ng-bind="event.dayName"></span> <span ng-bind="event.date | date"></span><span class="result-time" ng-bind="event.hours | milisecFilter"></span></div>
+                <div class="collapsible-body" style="padding:15px"><ul class="collapsible" data-collapsible="accordion" watch>
+                  <li ng-repeat="subEvent in event.events">
+                      <div class="collapsible-header"><i class="material-icons">{{subEvent.event_type.id==1?'check':'close'}}</i><span ng-bind="subEvent.create_date | date:'medium'"></span>   <span class="result-time" ng-if="subEvent.event_type.id==2" ng-bind="subEvent.tickedTime | milisecFilter"></span></div>
+                      <div class="collapsible-body" ng-if="subEvent.event_type.id==2"><p><span ng-bind="subEvent.comment"></span></p></div>
+                  </li>
+                </ul></div>
+            </li>
+          </ul>
+        </div>
+        <div ng-if="vm.filter=='Month'">
+
+        </div>
+      </div>
+      <div class="col s4">
+        <div class="card">
+          <div class="card-content green-text">
+            <table>
+               <thead>
+                 <tr>
+                     <th data-field="id">Definition</th>
+                     <th data-field="name">Value</th>
+                 </tr>
+               </thead>
+
+               <tbody>
+                 <tr>
+                   <td>Per day</td>
+                   <td><span ng-bind="vm.eventsInfo.hoursPerDay | timeFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>Day time overflow</td>
+                   <td><span style="color:{{vm.eventsInfo.hoursDayOverflow<0?'red':'green'}}" ng-bind="vm.eventsInfo.hoursDayOverflow | timeFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>On this week</td>
+                   <td><span ng-bind="vm.eventsInfo.hoursForWeek | milisecFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>Week time overflow</td>
+                   <td><span style="color:{{vm.eventsInfo.hoursWeekOverflow<0?'red':'green'}}" ng-bind="vm.eventsInfo.hoursWeekOverflow | timeFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>On this month</td>
+                   <td><span ng-bind="vm.eventsInfo.hoursForMonth | milisecFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>For all time</td>
+                   <td><span ng-bind="vm.eventsInfo.hoursSumm | milisecFilter"></span></td>
+                 </tr>
+                 <tr>
+                   <td>Checkins/Checkouts</td>
+                   <td><span ng-bind="vm.eventsInfo.eventsSumm"></span></td>
+                 </tr>
+               </tbody>
+             </table>
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

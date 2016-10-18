@@ -1,0 +1,60 @@
+<div class="auth-card-block">
+  <div class="auth-card row z-depth-1">
+    <div class="col s12 m2 l2">&nbsp;</div>
+    <div class="col s12 m8 l8">
+      <div class="auth-form">
+        <form name="singForm">
+          <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="name" type="text" class="validate" ng-model="singForm.name" required>
+                  <label for="name" >Your first name</label>
+              </div>
+             </div>
+             <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="sername" type="text" ng-model="singForm.sername" class="validate">
+                  <label for="sername">Your last name</label>
+              </div>
+             </div>
+             <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="email" type="email" class="validate" ng-model="singForm.email" required>
+                  <label for="email" ng-model="email">Your email</label>
+              </div>
+             </div>
+          <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="login" type="text" class="validate" ng-model="singForm.login" required>
+                  <label for="login" ng-model="login">Your login</label>
+              </div>
+             </div>
+            <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="password" type="password" class="validate" ng-model="singForm.password" required>
+                  <label for="password" ng-model="password">Your password</label>
+                </div>
+             </div>
+             <div class="row">
+                <div class="input-field col s12 l12">
+                  <input id="confirm-password" type="password" class="validate" ng-model="singForm.confirm_password" required>
+                  <label for="confirm-password">Confirm password</label>
+                </div>
+             </div>
+          <div class="row">
+            <div class="col s12 m10 l10">
+              <input type="checkbox" id="remember" ng-model="singForm.agree" required/>
+                <label for="remember">I argee with terms</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col l6">&nbsp;</div>
+            <div class="col s12 m10 l8">
+              <a class="waves-effect waves-light btn auth-form-btn create-account-button" ng-click="vm.singUp(singForm)" style="background-color: #ee6e73;">Create account</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col s12 m2 l2">&nbsp;</div>
+  </div>
+</div>

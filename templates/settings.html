@@ -1,0 +1,218 @@
+<div ng-init="vm.init()">
+  <div class="intra-container settings-top">
+    <div class="row">
+      <div class="col s4">
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">account_circle</i>
+                <input id="first_name" type="text" ng-model="vm.settings.name" class="validate">
+                <label for="first_name">First Name</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">none</i>
+                <input id="last_name" type="text" ng-model="vm.settings.sername" class="validate">
+                <label for="last_name">Last Name</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">email</i>
+                <input id="email" type="text" ng-model="vm.settings.email" class="validate">
+                <label for="email">Email</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">phone</i>
+                <input id="phone" type="text" ng-model="vm.settings.phone" class="validate">
+                <label for="phone">Phone</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">today</i>
+                <input input-date
+                    type="text"
+                    name="created"
+                    id="today"
+                    ng-model="vm.settings.dob"
+                    container="body"
+                    format="dd/mm/yyyy"
+                    months-full="{{ month }}"
+                    months-short="{{ monthShort }}"
+                    max="{{vm.maxDate}}"
+                    select-years="40"
+                    clear=false
+                    close="close"
+                    today = false
+                    />
+                <label for="today">Date of born</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+            <div class="row">
+              <div class="col s1"></div>
+              <div class="input-field col s10">
+                <i class="material-icons prefix">assignment_ind</i>
+                <textarea id="about_me" ng-model="vm.settings.about_me" class="materialize-textarea"></textarea>
+                <label for="about_me">About me</label>
+              </div>
+              <div class="col s1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s3">
+        <div class="row">
+          <div class="card card-clearfix">
+            <div class="card-content" >
+                <div class="col s1"></div>
+                <div class="input-field col s10" style="position:relative;">
+                  <select id="depart" ng-model="vm.settings.department.id" material-select watch>
+                      <option ng-repeat="dep in vm.departments" value="{{dep.id}}" ng-select="vm.setDepartment({{dep.id}})">{{dep.department_name}}</option>
+                  </select>
+                  <label for="depart">Department</label>
+                </div>
+
+                <div class="col s1"></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="card">
+            <div class="card-content center-align">
+              <!---->
+              <div class="row">
+                <div class="input-field col s12 center-align">
+                  <a class="waves-effect waves-light btn {{vm.settings.theme}}" href='#changePasswordModal' modal style="display: inherit;">Change password</a>
+                </div>
+                <div id="changePasswordModal" class="modal">
+                    <div class="modal-content">
+                      <div class="center-align">
+                          <form name="passwords" ng-submit="vm.changePassword()">
+                              <div class="row">
+                                <div class="col s1"></div>
+                                <div class="input-field col s12">
+                                  <input id="current_password" ng-model="vm.passwords.currentPassword" type="password" class="validate" required>
+                                  <label for="current_password">Current password</label>
+                                </div>
+                                <div class="col s1"></div>
+                              </div>
+                              <div class="row">
+                                <div class="col s1"></div>
+                                <div class="input-field col s12">
+                                  <input id="new_password" ng-model="vm.passwords.newPassword" type="password" class="validate" required>
+                                  <label for="new_password">New password</label>
+                                </div>
+                                <div class="col s1"></div>
+                              </div>
+                              <div class="row">
+                                <div class="col s1"></div>
+                                <div class="input-field col s12">
+                                  <input id="rep_password" ng-model="vm.passwords.reapetPassword" type="password" class="validate" required compare-to="vm.passwords.newPassword">
+                                  <label for="rep_password">Reapet password</label>
+                                </div>
+                                <div class="col s1"></div>
+                              </div>
+                          </form>
+                      </div>
+                    </div>
+                    <div style="margin-bottom:40px">
+                        <a class="{{vm.settings.theme}} waves-effect waves-light btn" ng-click="vm.changePassword()">Change</a>
+                        <a class="{{vm.settings.theme}} waves-effect waves-light btn modal-action modal-close">Close</a>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col s4">
+        <div class="card">
+          <div class="card-content">
+            <div class="row">
+              <label>Choose your theme</label>
+            </div>
+            <div class="row">
+              <div class="col s4">
+                 <input name="theme" type="radio" class="orange-radio" id="orange-radio" ng-click="vm.theme('amber')" ng-model="vm.settings.theme" value="amber"/>
+                <label for="orange-radio">Amber</label>
+              </div>
+              <div class="col s4">
+                <input name="theme" type="radio" class="cyan-radio" id="cyan-radio" ng-click="vm.theme('cyan')" ng-model="vm.settings.theme" value='cyan'/>
+                <label for="cyan-radio">Cyan</label>
+              </div>
+              <div class="col s4">
+                <input name="theme" type="radio" class="pink-radio" id="pink-radio" ng-click="vm.theme('pink')" ng-model="vm.settings.theme" value='pink'/>
+                <label for="pink-radio">Pink</label>
+              </div>
+              <div class="col s4">
+                <input name="theme" type="radio" class="indigo-radio" id="indigo-radio" ng-click="vm.theme('indigo')" ng-model="vm.settings.theme" value='indigo'/>
+                <label for="indigo-radio">Indigo</label>
+              </div>
+              <div class="col s4">
+                <input name="theme" type="radio" class="green-radio" id="green-radio" ng-click="vm.theme('light-green')" ng-model="vm.settings.theme" value='light-green'/>
+                <label for="green-radio">Green</label>
+              </div>
+              <div class="col s4">
+                <input name="theme" type="radio" class="grey-radio" id="grey-radio" ng-click="vm.theme('blue-grey')" ng-model="vm.settings.theme" value='blue-grey'/>
+                <label for="grey-radio">Grey</label>
+              </div>
+            </div>
+            <div class="row">
+              <label>Profile photo</label>
+            </div>
+            <div class="row">
+               <div style="margin-left: auto;margin-right: auto; display: table;"><img class="circle" ng-src="{{vm.settings.avatar}}" ng-if="!avatar.imageEdit"/><img class="circle" ng-src="{{avatar.myCroppedImage}}" ng-if="avatar.imageEdit"/></div>
+               <div class="file-field input-field">
+                  <div class="btn {{vm.settings.theme}}">
+                    <span>Avatar</span>
+                    <input type="file" id="avatarInput" >
+                  </div>
+                  <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" style="margin-left:35% !important;">
+                  </div>
+                </div>
+               <div class="cropArea" ng-show="avatar.imageEdit">
+                 <img-crop image="avatar.myImage" result-image="avatar.myCroppedImage"></img-crop>
+               </div>
+            </div>
+            <div class="row">
+              <label>Profile background</label>
+            </div>
+            <div class="row">
+              <div style="margin-left: auto;margin-right: auto; display: table;"><img ng-src="{{vm.settings.background}}" width="256" ng-if="!background.imageEdit"/><img ng-src="{{background.myCroppedImage}}" width="256" ng-if="background.imageEdit"/></div>
+              <div class="file-field input-field">
+                <div class="btn {{vm.settings.theme}}">
+                  <span>Background</span>
+                  <input type="file" id="backgroundInput" >
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" style="margin-left:45% !important;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large waves-effect waves-light" ng-class="vm.settings.theme" ng-click="vm.save()">
+      <i class="large material-icons">save</i>
+    </a>
+  </div>
+</div>

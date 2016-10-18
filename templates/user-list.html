@@ -1,0 +1,65 @@
+<div class="container" ng-init="vm.init()">
+  <div class="row">
+    <div class="card card-overflow intra-filter-panel hide-on-med-and-down" style="width:100%;position:inherit;">
+      <div class="intra-filter-inner">
+        <div class="col l8" style="margin-left: 5%;">
+          <div class="input-field">
+            <input type="text" id="search-input" ng-model="vm.query">
+            <label for="search-input">Search employee</label>
+          </div>
+        </div>
+        <div class="col s2 m2 l2">
+          <a class='{{vm.getColor()}} dropdown-button btn' data-activates='departmentsDropdown' dropdown data-hover="true" style="margin-top: 15%;">
+              {{vm.choosenDepartment}}
+          </a>
+
+          <!-- Dropdown Structure -->
+          <ul id='departmentsDropdown' class='dropdown-content' style="margin-top: 1%;">
+              <li ng-repeat="depart in vm.departments"><a href="javascript:void(0);" ng-click="vm.setDepart(depart)" class="{{vm.getColor()}}-text"><span ng-bind="depart"></span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m6 l4" ng-repeat="user in vm.users | filter:vm.query">
+      <div id="profile-card" class="card" style="min-height:340px;">
+           <div class="card-image waves-effect waves-block waves-light">
+               <img class="activator" ng-src="{{user.background}}" alt="user background">
+           </div>
+           <div class="card-content">
+               <img ng-src="{{user.avatar}}" alt="" class="circle responsive-img activator card-profile-image">
+               <a ng-href="{{'/#/user/'+user.id}}" class="{{vm.getColor()}} btn-floating btn-move-up waves-effect waves-light darken-2 right">
+                   <i class="material-icons">perm_identity</i>
+               </a>
+               <a class="btn-floating activator btn-move-up waves-effect waves-light darken-2 right {{vm.getColor()}}">
+                   <i class="material-icons">info_outline</i>
+               </a>
+               <span class="card-title activator grey-text text-darken-4" ng-bind="user.name + ' '+ user.sername"></span>
+               <p><span class="badge ligthing {{vm.getColor()}}" ng-bind="user.department.department_name"></span></p>
+                <p ng-if="user.position.id>0"><i class="mdi-action-perm-identity {{vm.getColor()}}-text text-darken-2"></i> <span ng-bind="user.position.position_name"></span></p>
+                <p ng-if="user.position===null"><i class="mdi-action-perm-identity {{vm.getColor()}}-text text-darken-2"></i> <span>Employee</span></p>
+                <p>
+                  <div class="switch">
+                    <label>
+                      Active
+                      <input type="checkbox" ng-model="user.active" ng-change="vm.changeUserActivation(user.id)">
+                      <span class="lever"></span>
+                    </label>
+                  </div>
+                </p>
+                <p>
+                  <div><span class="badge ligthing green-text">{{(user.last_event!=null&&user.last_event.event_type.id==1)?'Online':'Offline'}}</span></div><span><i class="tiny material-icons">{{user.last_event.event_type.id==1?'check':'close'}}</i>{{user.last_event.create_date!=null?user.last_event.create_date:'No events today' | date:'medium'}}</span>
+                </p>
+           </div>
+           <div class="card-reveal">
+               <span class="card-title grey-text text-darken-4"><span class="card-title activator grey-text text-darken-4" ng-bind="user.name + ' '+ user.sername"></span><i class="mdi-navigation-close right"></i></span>
+               <p><span ng-bind="user.about_me"></span></p>
+               <p ng-if="user.position.id>0"><i class="mdi-action-perm-identity {{vm.getColor()}}-text text-darken-2"></i> <span ng-bind="user.position.position_name"></span></p>
+               <p ng-if="user.department.department_name!=null"><i class="mdi-communication-business {{vm.getColor()}}-text text-darken-2"></i><span ng-bind="user.department.department_name"></span></p>
+               <p ng-if="user.email!=null"><i class="mdi-communication-email {{vm.getColor()}}-text text-darken-2"></i> <span ng-bind="user.email"></span></p>
+           </div>
+        </div>
+    </div>
+  </div>
+</div>

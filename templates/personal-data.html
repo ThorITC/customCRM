@@ -1,0 +1,295 @@
+
+  <div id="profile-page" class="section" style="padding:10px" ng-init='vm.init()'>
+        <div id="profile-page-header" class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" ng-src="{{vm.profileData.background}}" alt="user background">
+            </div>
+            <figure class="card-profile-image">
+                <img ng-src="{{vm.profileData.avatar}}" alt="profile image" class="circle z-depth-2 responsive-img activator">
+            </figure>
+            <div class="card-content">
+              <div class="row">
+                <div class="col s3 offset-s2">
+                    <h4 class="card-title grey-text text-darken-4"><span ng-bind="vm.profileData.name"></span> <span ng-bind="vm.profileData.sername"></span></h4>
+                    <p ng-show="vm.showField('position')" class="medium-small grey-text"><span ng-bind="vm.profileData.position.position_name"></span></p>
+                </div>
+
+                <div class="col s2 center-align">
+                    <h4 class="card-title grey-text text-darken-4"><span ng-bind="vm.profileData.reg_date"></span></h4>
+                    <p class="medium-small grey-text">Days in the system</p>
+                </div>
+                <div class="col s2 center-align">
+                    <h4 class="card-title grey-text text-darken-4">0</h4>
+                    <p class="medium-small grey-text">Ad's block</p>
+                </div>
+                <div class="col s2 center-align">
+                    <h4 class="card-title grey-text text-darken-4">0</h4>
+                    <p class="medium-small grey-text">Ad's block</p>
+                </div>
+                <div class="col s1 right-align">
+                  <a class="themer" other-class="btn-floating activator waves-effect waves-light darken-2 right">
+                      <i class="material-icons">perm_identity</i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-reveal" style="display: none; transform: translateY(0px);">
+
+                <p>
+                  <span class="card-title grey-text text-darken-4"><span ng-bind="vm.profileData.name"></span> <span ng-bind="vm.profileData.sername"></span> <i class="material-icons right">close</i></span>
+                  <span ng-show="vm.showField('position')"><i class="themer" text-theme='true' other-class="material-icons tiny text-darken-2">perm_identity</i> <span ng-bind="vm.profileData.position.position_name"></span></span>
+                </p>
+
+                <p ng-show="vm.showField('about_me')"><span ng-bind="vm.profileData.about_me"></span></p>
+
+                <p ng-show="vm.showField('phone')"><i class="themer" text-theme='true' other-class="material-icons tiny text-darken-2">phone</i> <span ng-bind="vm.profileData.phone"></span></p>
+                <p ng-show="vm.showField('email')"><i class="themer" text-theme='true' other-class="material-icons tiny text-darken-2">mail</i> <span ng-bind="vm.profileData.email"></span></p>
+                <p ng-show="vm.showField('dob')"><i class="themer" text-theme='true' other-class="material-icons tiny text-darken-2">cake</i> <span ng-bind="(vm.profileData.dob|date)"></span></p>
+
+            </div>
+        </div>
+            <!-- profile-page-content -->
+            <div id="profile-page-content" class="row">
+              <!-- profile-page-sidebar-->
+              <div id="profile-page-sidebar" class="col s12 m4">
+                <!-- Profile About  -->
+                <div class="card light-blue" ng-show="vm.showField('about_me')">
+                  <div class="card-content white-text">
+                    <span class="card-title">About Me!</span>
+                    <p><span ng-bind="vm.profileData.about_me"></span></p>
+                  </div>
+                </div>
+                    <!--<div class="product-card">
+                        <div class="card">
+                            <div class="card-image waves-effect waves-block waves-light">
+                                <img ng-src="{{vm.profileData.background}}" alt="product-img">
+                            </div>
+                            <ul class="card-action-buttons">
+                                <li>
+                                  <a class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-av-repeat"></i></a>
+                                </li>
+                            </ul>
+                            <div class="card-content">
+
+                                <div class="row">
+                                    <div class="col s8">
+                                        <p class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">Featured Product of The Month</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+              </div>
+              <!-- profile-page-sidebar-->
+
+              <!-- profile-page-wall -->
+              <div id="profile-page-wall" class="col s12 m8" style="float:right;">
+                <!-- profile-page-wall-share -->
+                <div class="card">
+                  <div class="card-content">
+                    <div class="row" id="accessTab" ng-if="true">
+                      <div class="col s12">
+                          <ul id="accessTabs" class="tabs" tabs style="overflow: hidden;">
+                              <li class="tab col s3"><a class="themer" text-theme="true" href="#accessList" ng-click="vm.activeTab('public')">Accesses</a></li>
+                              <li class="tab col s3"><a class="themer" text-theme="true" href="#privatePass" ng-click="vm.activeTab('private')">Private passwords</a></li>
+                              <li class="tab col s3"><a class="themer" text-theme="true" other-class="active" href="#newPass" ng-click="vm.activeTab('add')">Add new password</a></li>
+                          </ul>
+                          <div ng-show="vm.ShowShareField()">
+                            <div class="row" style="padding-top:2%;">
+                              <div class="col s6"><auto-complete-input employee-id="vm.sharedId" auto-data-prom="vm.names" ac-title="'Choose employee'" color="vm.getMainColor()"></auto-complete-input></div>
+                              <div class="col s4"><a class="themer" other-class="btn-floating btn-medium waves-effect waves-light" ng-click="vm.shareAccessMethod()"><i class="material-icons">chevron_right</i></a></div>
+                            </div>
+                            <div style="margin-top: -1%;">
+                              <div class="chip" ng-repeat="pass in vm.shareAccess"><span ng-bind="pass.title"></span><i class="material-icons" ng-click="vm.addAccessToShareArray(pass)">close</i></div>
+                            </div>
+                          </div>
+                      </div>
+                      <!--TAB 1-->
+                      <div id="accessList" class="col s12">
+
+                        <ul class="collapsible" data-collapsible="accordion" watch>
+                            <li ng-repeat="(key,single) in vm.publicPasswords">
+                                <div class="collapsible-header"><span ng-bind="key+1"></span>. <span ng-bind="single.group"></span></div>
+                                <div class="collapsible-body">
+                                  <div style="padding: 4%;margin-top: -4%;">
+                                  <table class="highlight bordered">
+                                    <thead>
+                                      <tr>
+                                          <th data-field="num" style="width: 5%;">#</th>
+                                          <th data-field="pass" colspan="4">Password</th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-repeat-start="(num,pass) in single.items">
+                                          <td rowspan="2"><input class="themer" other-class="filled-in" type="checkbox" id="{{pass.id}}" ng-checked="vm.inShareAccessArray(pass.access)" ng-click="vm.addAccessToShareArray(pass.access)"/> <label for="{{pass.id}}"><span ng-bind="num+1"></span>.</label></td>
+                                          <td colspan="4"><a target="_blank" ng-href="{{pass.access.url}}"><span ng-bind="pass.access.title"></span></a><code ng-if="pass.access.comment.length!=0" style="background-color:{{vm.getColor()}};margin-left: 2%;border-radius: 10px;padding: 3px;">{{'/*'+pass.access.comment+'*/'}}</code></td>
+                                        </tr>
+                                        <tr ng-repeat-end="">
+                                          <td><span>{{pass.access.email.length!=0?pass.access.email:'Email undefined'}}</span></td>
+                                          <td><span ng-bind="pass.access.username"></span></td>
+                                          <td><password-input bind-data="pass.access.password"></password-input></td>
+                                        </tr>
+                                    </tbody>
+                                  </table></div>
+                                </div>
+                            </li>
+                        </ul>
+                      </div>
+                      <!-- END OF TAB 1-->
+                      <!--TAB 2-->
+                      <div id="privatePass" class="col s12">
+                        <ul class="collapsible" data-collapsible="accordion" watch>
+                            <li ng-repeat="(key,single) in vm.privatePasswords">
+                                <div class="collapsible-header"><span ng-bind="key+1"></span>. <span ng-bind="single.group"></span></div>
+                                <div class="collapsible-body">
+                                  <div style="padding: 4%;margin-top: -4%;">
+                                  <table class="highlight bordered">
+                                    <thead>
+                                      <tr>
+                                          <th data-field="num" style="width: 5%;">#</th>
+                                          <th data-field="pass" colspan="3">Password</th>
+                                          <th data-field="name">Edit</th>
+                                      </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr ng-repeat-start="(num,pass) in single.items">
+                                          <td rowspan="2"><input class="themer" other-class="filled-in" type="checkbox" id="{{pass.id}}" ng-checked="vm.inShareAccessArray(pass)" ng-click="vm.addAccessToShareArray(pass)"/> <label for="{{pass.id}}"><span ng-bind="num+1"></span>.</label></td>
+                                          <td colspan="4"><a target="_blank" ng-href="{{pass.url}}"><span ng-bind="pass.title"></span></a><code ng-if="pass.comment.length!=0" style="background-color:{{vm.getColor()}};margin-left: 2%;border-radius: 10px;padding: 3px;">{{'/*'+pass.comment+'*/'}}</code><code style="margin-left: 2%;background-color:{{pass.is_public?'#81C784':'#E57373'}};border-radius: 10px;padding: 3px;">{{pass.is_public?'public':'private'}}</code></td>
+                                        </tr>
+                                        <tr ng-repeat-end="">
+
+                                          <td><span>{{pass.email.length!=0?pass.email:'Email undefined'}}</span></td>
+                                          <td><span ng-bind="pass.username"></span></td>
+                                          <td><password-input bind-data="pass.password"></password-input></td>
+                                          <td>
+                                            <a class="btn-flat" style="padding: 0 1rem;" ng-click="vm.deleteAccess(pass.id)"><i class="material-icons password-input-tool">delete</i></a>
+                                            <a class="btn-flat" style="padding: 0 1rem;" ng-click="vm.editAccess(pass)" href='#editAccessModal' modal><i class="material-icons password-input-tool">create</i></a>
+
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                  </table></div>
+                                </div>
+                            </li>
+                        </ul>
+
+                      </div>
+                      <!-- END OF TAB 2-->
+                      <!--TAB 3-->
+                      <div id="newPass" class="col s12">
+                        <div class="card">
+                          <div class="card-content">
+                            <div class="row">
+                              <form class="col s12" id="newAccessForm" ng-submit="vm.addNewAccess()">
+                                <div class="row">
+                                  <div class="input-field col s6">
+                                    <input id="access_title" ng-model="vm.newAccess.title" type="text" class="validate" required>
+                                    <label for="access_title">Title</label>
+                                  </div>
+                                  <div class="input-field col s6">
+                                    <input id="access_url" ng-model="vm.newAccess.url" type="text" class="validate" required>
+                                    <label for="access_url">URL</label>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="input-field col s6">
+                                    <input id="access_email" ng-model="vm.newAccess.email" type="email" class="validate">
+                                    <label for="access_email">Email</label>
+                                  </div>
+                                </div>
+
+                                <div class="row">
+                                  <div class="input-field col s6">
+                                    <input id="access_username" ng-model="vm.newAccess.username" type="text" class="validate" required>
+                                    <label for="access_username">Username</label>
+                                  </div>
+                                  <div class="input-field col s6">
+                                    <input id="access_password" type="password" ng-model="vm.newAccess.password" class="validate" required>
+                                    <label for="access_password">Password</label>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="input-field col s6">
+                                    <input id="access_group" type="text" ng-model="vm.newAccess.group" class="validate" required>
+                                    <label for="access_group">Group</label>
+                                  </div>
+                                  <div class="input-field col s6">
+                                    <div class="switch">
+                                      <label>
+                                        Private
+                                        <input type="checkbox" ng-model="vm.newAccess.isPublic">
+                                        <span class="lever"></span>
+                                        Public
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="input-field col s12">
+                                    <textarea id="access_comment" ng-model="vm.newAccess.comment" class="materialize-textarea"></textarea>
+                                    <label for="access_comment">Comment</label>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="valign-wrapper col s12">
+                                    <button class="themer" other-class="waves-effect waves-light btn valign" form="newAccessForm" style="margin: auto;">Add a new access</button>
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- END OF TAB 3-->
+                    </div>
+                  </div>
+                </div>
+
+                <!--/ profile-page-wall-share -->
+              </div>
+              <!--/ profile-page-wall -->
+
+            </div>
+          </div>
+          <!--Edit modal-->
+          <div id="editAccessModal" class="modal bottom-sheet edit-access-modal">
+            <div class="modal-content">
+              <div class="row">
+                <div class="input-field col s3">
+                  <input id="access_edit_email" ng-model="vm.accessToEdit.email" type="email" class="validate">
+                  <label for="access_edit_email">Email</label>
+                </div>
+                <div class="input-field col s3">
+                  <input id="access_edit_username" ng-model="vm.accessToEdit.username" type="text" class="validate" required>
+                  <label for="access_edit_username">Username</label>
+                </div>
+                <div class="input-field col s3">
+                  <input id="access_edit_password" ng-model="vm.accessToEdit.password" type="password" class="validate" required>
+                  <label for="access_edit_password">Password</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s3">
+                  <input class="themer" id="access_edit_title" ng-model="vm.accessToEdit.title" type="text" class="validate">
+                  <label for="access_edit_title">Title</label>
+                </div>
+                <div class="input-field col s3">
+                  <input id="access_edit_url" ng-model="vm.accessToEdit.url" type="text" class="validate">
+                  <label for="access_edit_url">URL</label>
+                </div>
+                <div class="input-field col s3">
+                  <input id="access_edit_comment" ng-model="vm.accessToEdit.comment" type="text" class="validate">
+                  <label for="access_edit_comment">Comment</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <a class="modal-action modal-close waves-effect btn-flat">Cancel</a>
+              <a class="modal-action modal-close waves-effect btn-flat" ng-click="vm.saveEdited()">Save</a>
+            </div>
+          </div>
+          <!--End of modal-->

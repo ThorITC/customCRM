@@ -1,0 +1,36 @@
+<div class="auth-card-block">
+		<div class="auth-card row z-depth-1">
+			<div class="col s12 m2 l2">&nbsp;</div>
+			<div class="col s12 m8 l8">
+				<div class="auth-form">
+					<form name="loginForm">
+						<div class="row">
+					        <div class="input-field col s12 l12">
+					          <input id="login" type="text" class="validate" ng-model="loginForm.login" required>
+					          <label for="login">Login</label>
+					     	</div>
+					     </div>
+					    <div class="row">
+					        <div class="input-field col s12 l12">
+					          <input id="password" type="password" class="validate" ng-model="loginForm.password" required>
+					          <label for="password">Password</label>
+					        </div>
+					     </div>
+						<div class="row">
+							<div class="col s12 m10 l8">
+								<input type="checkbox" id="remember" ng-model="loginForm.remember"/>
+		   						<label for="remember">Remember me</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col l6">&nbsp;</div>
+							<div class="col s12 m10 l6">
+								<a class="waves-effect waves-light btn auth-form-btn" ng-click="vm.auth(loginForm)" style="background-color: #ee6e73;">Log in</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col s12 m2 l2">&nbsp;</div>
+		</div>
+</div>
